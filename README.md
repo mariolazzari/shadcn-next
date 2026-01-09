@@ -17,4 +17,4 @@ pnpm dlx shadcn@latest add button
 
 ## Building the landing page
 
-### Loading page
+### Custom theme
