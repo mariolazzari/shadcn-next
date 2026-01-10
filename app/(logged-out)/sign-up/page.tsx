@@ -17,7 +17,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,24 +24,22 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 
-export const loginSchema = z.object({
+export const signupSchema = z.object({
   email: z.email(),
-  password: z.string(),
 });
 
-export type Login = z.infer<typeof loginSchema>;
+export type Signup = z.infer<typeof signupSchema>;
 
-function LoginPage() {
-  const form = useForm<Login>({
-    resolver: zodResolver(loginSchema),
+function SignupPage() {
+  const form = useForm<Signup>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  const onSubmit = (data: Login) => {
-    console.log("Login data", data);
+  const onSubmit = (data: Signup) => {
+    console.log("Signup data", data);
   };
 
   return (
@@ -50,8 +47,8 @@ function LoginPage() {
       <PersonStandingIcon size={50} />
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Login to your SupportMe account</CardDescription>
+          <CardTitle>Sign Up</CardTitle>
+          <CardDescription>Sign up for new SupportMe account</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -69,39 +66,19 @@ function LoginPage() {
                     <FormControl>
                       <Input placeholder="Email" {...field} />
                     </FormControl>
-                    <FormDescription>Your email address</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Password"
-                        type="password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>Your password</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button type="submit">Login</Button>
+              <Button type="submit">Sign Up</Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="justify-between gap-2">
-          <small>Don&apos;t have an account? </small>
+          <small>Already have an account? </small>
           <Button asChild variant="outline" size="sm">
-            <Link href="/sign-up">Sign Up</Link>
+            <Link href="/login">Login</Link>
           </Button>
         </CardFooter>
       </Card>
@@ -109,4 +86,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignupPage;
