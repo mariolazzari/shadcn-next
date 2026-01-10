@@ -4,6 +4,8 @@
 
 ### NextJS setup
 
+[NextJS](https://ui.shadcn.com/docs/installation/next)
+
 ```sh
 pnpx create-next-app@latest
 ```
@@ -19,6 +21,21 @@ pnpm dlx shadcn@latest add button
 
 ### Custom theme
 
+[Theme](https://ui.shadcn.com/docs/dark-mode/next)
+
 ```sh
 pnpm add next-themes
+```
+
+## Login page
+
+### Login page card
+
+[Card](https://ui.shadcn.com/docs/components/card)
+[Form](https://ui.shadcn.com/docs/components/form)
+
+```sh
+pnpm dlx shadcn@latest add card
+pnpm dlx shadcn@latest add form
+pnpm dlx shadcn@latest add input
 ```
