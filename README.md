@@ -56,3 +56,5 @@ pnpm dlx shadcn@latest add popover
 ```
 
 [Calendar](https://ui.shadcn.com/docs/components/calendar#date-of-birth-picker)
+
+### Password fields

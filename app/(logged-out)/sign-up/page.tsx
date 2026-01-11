@@ -22,7 +22,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { z } from "zod";
 import {
   Select,
   SelectContent,
@@ -36,57 +35,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-
-export const signupSchema = z
-  .object({
-    email: z.email(),
-    accountType: z.enum(["personal", "company"]),
-    companyName: z.string().optional(),
-    employees: z.coerce.number<number>().optional(),
-    dob: z.date().refine(date => {
-      const today = new Date();
-      const eighteenYearsAgo = new Date(
-        today.getFullYear() - 18,
-        today.getMonth(),
-        today.getDate()
-      );
-      return date < eighteenYearsAgo;
-    }, "You must be at least 18 years old"),
-  })
-  .superRefine((data, ctx) => {
-    const { accountType, companyName, employees } = data;
-
-    if (accountType === "company" && !companyName) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["companyName"],
-        message: "Company name is required",
-      });
-    }
-
-    if (accountType === "company" && (!employees || employees < 1)) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["employees"],
-        message: "Employess must be greateer than 1",
-      });
-    }
-  });
-
-export type Signup = z.infer<typeof signupSchema>;
+import { SignupForm, signupFormSchema } from "./schema";
 
 function SignupPage() {
-  const form = useForm<Signup>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<SignupForm>({
+    resolver: zodResolver(signupFormSchema),
     defaultValues: {
       email: "",
-      accountType: "personal",
-      companyName: "",
-      employees: 0,
+      accountType: undefined,
+      companyName: undefined,
+      numberOfEmployees: undefined,
+      dob: undefined,
+      password: "",
+      passwordConfirm: "",
     },
   });
 
-  const onSubmit: SubmitHandler<Signup> = data => {
+  const onSubmit: SubmitHandler<SignupForm> = data => {
     console.log("Signup data", data);
   };
 
@@ -169,7 +134,9 @@ function SignupPage() {
                             id="date"
                             className="w-full justify-between font-normal pr-1"
                           >
-                            Select date
+                            {field.value
+                              ? field.value.toDateString()
+                              : "Select a date"}
                             <CalendarIcon />
                           </Button>
                         </PopoverTrigger>
@@ -220,7 +187,7 @@ function SignupPage() {
 
                 <FormField
                   control={form.control}
-                  name="employees"
+                  name="numberOfEmployees"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Employees</FormLabel>
@@ -238,6 +205,42 @@ function SignupPage() {
                 />
               </>
             )}
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Password..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="passwordConfirm"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Confirm password..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <Button type="submit">Sign Up</Button>
           </form>
