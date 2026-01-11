@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { SignupForm, signupFormSchema } from "./schema";
+import { PasswordInput } from "@/components/ui/password-input";
 
 function SignupPage() {
   const form = useForm<SignupForm>({
@@ -213,11 +214,7 @@ function SignupPage() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Password..."
-                      {...field}
-                    />
+                    <PasswordInput placeholder="Password..." {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -231,8 +228,7 @@ function SignupPage() {
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
+                    <PasswordInput
                       placeholder="Confirm password..."
                       {...field}
                     />
