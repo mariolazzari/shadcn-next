@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PersonStandingIcon } from "lucide-react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -23,9 +23,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const signupSchema = z.object({
   email: z.email(),
+  accountType: z.enum(["personal", "company"]),
+  companyName: z.string().optional(),
+  employees: z.coerce.number<number>().optional(),
 });
 
 export type Signup = z.infer<typeof signupSchema>;
@@ -35,10 +45,13 @@ function SignupPage() {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: "",
+      accountType: "personal",
+      companyName: "",
+      employees: 0,
     },
   });
 
-  const onSubmit = (data: Signup) => {
+  const onSubmit: SubmitHandler<Signup> = data => {
     console.log("Signup data", data);
   };
 
@@ -65,6 +78,44 @@ function SignupPage() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="accountType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Account Type</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select an account type..." />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="personal">Personal</SelectItem>
+                          <SelectItem value="company">Company</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="employees"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Employees</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="Employees" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
