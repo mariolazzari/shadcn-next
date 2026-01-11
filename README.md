@@ -40,8 +40,19 @@ pnpm dlx shadcn@latest add form
 pnpm dlx shadcn@latest add input
 ```
 
-### Account type
+### Account type (select component)
 
 ```sh
 pnpm dlx shadcn@latest add select
 ```
+
+[Select](https://ui.shadcn.com/docs/components/select)
+
+### Date picker
+
+```sh
+pnpm dlx shadcn@latest add calendar
+pnpm dlx shadcn@latest add popover
+```
+
+[Calendar](https://ui.shadcn.com/docs/components/calendar#date-of-birth-picker)
