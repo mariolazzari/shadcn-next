@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -37,8 +38,12 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import { SignupForm, signupFormSchema } from "./schema";
 import { PasswordInput } from "@/components/ui/password-input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 
 function SignupPage() {
+  const router = useRouter();
+
   const form = useForm<SignupForm>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
@@ -49,11 +54,13 @@ function SignupPage() {
       dob: undefined,
       password: "",
       passwordConfirm: "",
+      acceptTerms: false,
     },
   });
 
   const onSubmit: SubmitHandler<SignupForm> = data => {
     console.log("Signup data", data);
+    router.push("/dashboard");
   };
 
   const accountType = useWatch({
@@ -233,6 +240,34 @@ function SignupPage() {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="acceptTerms"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Checkbox
+                        defaultChecked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Accept Terms and conditions</FormLabel>
+                  </div>
+                  <FormDescription>
+                    By signing up you agree to our{" "}
+                    <Link
+                      className="text-primary hover:underline"
+                      href="/terms"
+                    >
+                      terms and condition
+                    </Link>
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 export const loginSchema = z.object({
   email: z.email(),
@@ -33,6 +34,8 @@ export const loginSchema = z.object({
 export type Login = z.infer<typeof loginSchema>;
 
 function LoginPage() {
+  const router = useRouter();
+
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -43,6 +46,7 @@ function LoginPage() {
 
   const onSubmit = (data: Login) => {
     console.log("Login data", data);
+    router.push("/dashboard");
   };
 
   return (

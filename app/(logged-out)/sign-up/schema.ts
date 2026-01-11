@@ -63,6 +63,7 @@ const baseSchema = z.object({
     );
     return date <= eighteenYearsAgo;
   }, "You must be at least 18 years old"),
+  acceptTerms: z.boolean({ error: "You must accept terms & conditions" }),
 });
 
 export const signupFormSchema = baseSchema

@@ -6,11 +6,19 @@ import { Input } from "./input";
 import { EyeIcon, EyeOff } from "lucide-react";
 
 export function PasswordInput({
-  className,
   ref,
+  className,
   ...props
 }: ComponentProps<"input">) {
   const [showPassword, setShowPassword] = useState(false);
+
+  function hideText() {
+    setShowPassword(false);
+  }
+
+  function showText() {
+    setShowPassword(true);
+  }
 
   return (
     <div className="relative">
@@ -22,9 +30,9 @@ export function PasswordInput({
       />
       <span className="absolute top-1.75 right-1 cursor-pointer select-none">
         {showPassword ? (
-          <EyeIcon onClick={() => setShowPassword(false)} />
+          <EyeIcon onClick={hideText} />
         ) : (
-          <EyeOff onClick={() => setShowPassword(true)} />
+          <EyeOff onClick={showText} />
         )}
       </span>
     </div>
