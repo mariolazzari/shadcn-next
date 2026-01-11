@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PersonStandingIcon } from "lucide-react";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -31,12 +31,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const signupSchema = z.object({
-  email: z.email(),
-  accountType: z.enum(["personal", "company"]),
-  companyName: z.string().optional(),
-  employees: z.coerce.number<number>().optional(),
-});
+export const signupSchema = z
+  .object({
+    email: z.email(),
+    accountType: z.enum(["personal", "company"]),
+    companyName: z.string().optional(),
+    employees: z.coerce.number<number>().optional(),
+  })
+  .superRefine((data, ctx) => {
+    const { accountType, companyName, employees } = data;
+
+    if (accountType === "company" && !companyName) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["companyName"],
+        message: "Company name is required",
+      });
+    }
+
+    if (accountType === "company" && (!employees || employees < 1)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["employees"],
+        message: "Employess must be greateer than 1",
+      });
+    }
+  });
 
 export type Signup = z.infer<typeof signupSchema>;
 
@@ -54,6 +74,11 @@ function SignupPage() {
   const onSubmit: SubmitHandler<Signup> = data => {
     console.log("Signup data", data);
   };
+
+  const accountType = useWatch({
+    control: form.control,
+    name: "accountType",
+  });
 
   return (
     <>
@@ -91,7 +116,10 @@ function SignupPage() {
                   <FormItem>
                     <FormLabel>Account Type</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange}>
+                      <Select
+                        defaultValue={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <FormControl>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select an account type..." />
@@ -108,19 +136,42 @@ function SignupPage() {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="employees"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Employees</FormLabel>
-                    <FormControl>
-                      <Input type="number" placeholder="Employees" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {accountType === "company" && (
+                <>
+                  <FormField
+                    control={form.control}
+                    name="companyName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Company Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Company name..." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="employees"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Employees</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="number"
+                            placeholder="Employees"
+                            min={0}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
+              )}
 
               <Button type="submit">Sign Up</Button>
             </form>
