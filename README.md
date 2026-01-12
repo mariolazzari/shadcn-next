@@ -208,3 +208,5 @@ function DashboardLayout({ children }: Layout) {
 
 export default DashboardLayout;
 ```
+
+### Menu title
