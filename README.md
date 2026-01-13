@@ -224,3 +224,9 @@ pnpm dlx shadcn@latest add avatar
 ```sh
 pnpm dlx shadcn@latest add tabs
 ```
+
+### Data cards
+
+```sh
+
+```
