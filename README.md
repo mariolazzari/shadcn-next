@@ -209,4 +209,18 @@ function DashboardLayout({ children }: Layout) {
 export default DashboardLayout;
 ```
 
-### Menu title
+### Avatar
+
+[Docs](https://ui.shadcn.com/docs/components/avatar)
+
+```sh
+pnpm dlx shadcn@latest add avatar
+```
+
+## Dashboard
+
+### Team tabs
+
+```sh
+pnpm dlx shadcn@latest add tabs
+```
