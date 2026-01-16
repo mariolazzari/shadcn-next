@@ -238,3 +238,11 @@ pnpm dlx shadcn@latest add tabs
         "icon-lg": "size-10",
       },
 ```
+
+### Stacked bar chart
+
+[Recharts](https://recharts.github.io/)
+
+```sh
+pnpm dlx shadcn@latest add chart
+```
