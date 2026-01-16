@@ -103,7 +103,7 @@ export function EmployeesStats() {
           </CardTitle>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="pl-0">
           <WorkLocationTrends />
         </CardContent>
       </Card>
