@@ -527,4 +527,8 @@ export default function SupportTicketsResolved() {
 
 ## Extras
 
-### Mobile menu
+### Drawer
+
+```sh
+pnpm dlx shadcn@latest add drawer
+```
