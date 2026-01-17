@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { EmployeesStats } from "./components/employees/employees-stats";
-import { TeamStats } from "./components/team-stats";
+import { TeamStats } from "./components/team/team-stats";
 
 function DashboardPage() {
   return (
