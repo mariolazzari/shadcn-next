@@ -4,10 +4,15 @@ import { MenuItem } from "./menu-item";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { LightDarkToogle } from "@/components/light-dark-toggle";
+import { cn } from "@/lib/utils";
 
-export function MainMenu() {
+type Props = {
+  className?: string;
+};
+
+export function MainMenu({ className }: Props) {
   return (
-    <nav className="bg-muted overflow-auto p-4 flex flex-col">
+    <nav className={cn("bg-muted overflow-auto p-4 flex flex-col", className)}>
       <header>
         <MenuTitle />
       </header>
