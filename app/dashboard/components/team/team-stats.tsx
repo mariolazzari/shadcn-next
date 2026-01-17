@@ -6,9 +6,65 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { ListCheckIcon, PartyPopperIcon, UsersIcon } from "lucide-react";
+import {
+  ListCheckIcon,
+  PartyPopperIcon,
+  StarIcon,
+  UsersIcon,
+} from "lucide-react";
 import Link from "next/link";
+import cm from "@/public/cm.jpg";
+import rl from "@/public/rl.jpg";
+import tf from "@/public/tf.jpg";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+
+const teamLeaders = [
+  {
+    firstName: "Colin",
+    lastName: "Murray",
+    avatar: cm,
+  },
+  {
+    firstName: "Tom",
+    lastName: "Phillips",
+  },
+  {
+    firstName: "Liam",
+    lastName: "Fuentes",
+  },
+  {
+    firstName: "Tina",
+    lastName: "Fey",
+    avatar: tf,
+  },
+  {
+    firstName: "Katie",
+    lastName: "Johnson",
+  },
+  {
+    firstName: "Tina",
+    lastName: "Jones",
+  },
+  {
+    firstName: "Amy",
+    lastName: "Adams",
+  },
+  {
+    firstName: "Ryan",
+    lastName: "Lopez",
+    avatar: rl,
+  },
+  {
+    firstName: "Jenny",
+    lastName: "Jones",
+  },
+];
 
 export function TeamStats() {
   return (
@@ -33,9 +89,38 @@ export function TeamStats() {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Team leaders</CardTitle>
+            <CardTitle className="text-base flex justify-between items-center">
+              <span>Team leaders</span> <StarIcon className="text-yellow-500" />
+            </CardTitle>
           </CardHeader>
-          <CardContent className="flex justify-between items-center"></CardContent>
+          <CardContent className="flex flex-wrap gap-4">
+            {teamLeaders.map(tl => (
+              <TooltipProvider key={`${tl.firstName}_${tl.lastName}`}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Avatar>
+                      {!!tl.avatar && (
+                        <AvatarImage
+                          className="rounded-full"
+                          src={tl.avatar.src}
+                          alt={tl.lastName}
+                          width={25}
+                          height={25}
+                        />
+                      )}
+                      <AvatarFallback>
+                        {tl.firstName[0]}
+                        {tl.lastName[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {tl.firstName} {tl.lastName}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ))}
+          </CardContent>
         </Card>
 
         <Card>
