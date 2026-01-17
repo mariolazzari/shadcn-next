@@ -9,6 +9,7 @@ import {
 import {
   ListCheckIcon,
   PartyPopperIcon,
+  PieChartIcon,
   StarIcon,
   UsersIcon,
 } from "lucide-react";
@@ -23,6 +24,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { TeamDistributionChart } from "./team-distribution-chart";
 
 const teamLeaders = [
   {
@@ -125,8 +127,14 @@ export function TeamStats() {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Team Distribution</CardTitle>
+            <CardTitle className="text-base flex justify-between items-center">
+              Team Distribution
+              <PieChartIcon />
+            </CardTitle>
           </CardHeader>
+          <CardContent>
+            <TeamDistributionChart />
+          </CardContent>
           <CardFooter className="flex items-center gap-2 text-sm text-muted-foreground mt-auto">
             <PartyPopperIcon className="text-pink-500" />
             <span>Congratulations Colin!</span>
