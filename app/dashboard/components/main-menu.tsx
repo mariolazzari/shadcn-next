@@ -12,8 +12,10 @@ type Props = {
 
 export function MainMenu({ className }: Props) {
   return (
-    <nav className={cn("bg-muted overflow-auto p-4 flex flex-col", className)}>
-      <header>
+    <nav
+      className={cn("md:bg-muted overflow-auto p-4 flex flex-col", className)}
+    >
+      <header className="hidden md:block">
         <MenuTitle />
       </header>
       <Separator className="my-4 dark:bg-black bg-zinc-300" />
