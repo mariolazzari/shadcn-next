@@ -14,9 +14,9 @@ import {
   UsersIcon,
 } from "lucide-react";
 import Link from "next/link";
-import cm from "@/public/cm.jpg";
-import rl from "@/public/rl.jpg";
-import tf from "@/public/tf.jpg";
+import cm from "@/public/images/cm.jpg";
+import rl from "@/public/images/rl.jpg";
+import tf from "@/public/images/tf.jpg";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import {
   Tooltip,

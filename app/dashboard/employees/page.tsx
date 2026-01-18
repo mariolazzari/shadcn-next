@@ -1,84 +1,90 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DataTable } from "@/components/ui/data-table";
 import { setTimeout } from "timers/promises";
+import { columns, Employee } from "./columns";
 
 async function EmployeesPage() {
   await setTimeout(3000);
 
-  const data = [
+  const data: Employee[] = [
     {
-      name: "Jan",
-      delta: 40,
-      alpha: 24,
-      canary: 24,
+      id: 1,
+      firstName: "Colin",
+      lastName: "Murray",
+      teamName: "alpha",
+      isTeamLeader: true,
+      avatar: "/images/cm.jpg",
     },
     {
-      name: "Feb",
-      delta: 30,
-      alpha: 13,
-      canary: 22,
+      id: 2,
+      firstName: "Tom",
+      lastName: "Phillips",
+      teamName: "alpha",
+      isTeamLeader: false,
     },
     {
-      name: "Mar",
-      delta: 20,
-      alpha: 58,
-      canary: 29,
+      id: 3,
+      firstName: "Liam",
+      lastName: "Fuentes",
+      teamName: "alpha",
+      isTeamLeader: false,
     },
     {
-      name: "Apr",
-      delta: 14,
-      alpha: 30,
-      canary: 15,
+      id: 4,
+      firstName: "Tina",
+      lastName: "Fey",
+      teamName: "canary",
+      isTeamLeader: true,
+      avatar: "/images/tf.jpg",
     },
     {
-      name: "May",
-      delta: 29,
-      alpha: 28,
-      canary: 18,
+      id: 5,
+      firstName: "Katie",
+      lastName: "Johnson",
+      teamName: "canary",
+      isTeamLeader: false,
     },
     {
-      name: "Jun",
-      delta: 19,
-      alpha: 19,
-      canary: 10,
+      id: 6,
+      firstName: "Tina",
+      lastName: "Jones",
+      teamName: "canary",
+      isTeamLeader: false,
     },
     {
-      name: "Jul",
-      delta: 34,
-      alpha: 24,
-      canary: 14,
+      id: 7,
+      firstName: "Amy",
+      lastName: "Adams",
+      teamName: "delta",
+      isTeamLeader: true,
     },
     {
-      name: "Aug",
-      delta: 21,
-      alpha: 20,
-      canary: 19,
+      id: 8,
+      firstName: "Ryan",
+      lastName: "Lopez",
+      teamName: "delta",
+      isTeamLeader: false,
+      avatar: "/images/rl.jpg",
     },
     {
-      name: "Sep",
-      delta: 49,
-      alpha: 43,
-      canary: 20,
-    },
-    {
-      name: "Oct",
-      delta: 43,
-      alpha: 55,
-      canary: 4,
-    },
-    {
-      name: "Nov",
-      delta: 39,
-      alpha: 40,
-      canary: 25,
-    },
-    {
-      name: "Dec",
-      delta: 34,
-      alpha: 43,
-      canary: 11,
+      id: 9,
+      firstName: "Jenny",
+      lastName: "Jones",
+      teamName: "delta",
+      isTeamLeader: false,
     },
   ];
 
-  return <div>Employees Page</div>;
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Employees</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <DataTable columns={columns} data={data} />
+      </CardContent>
+    </Card>
+  );
 }
 
 export default EmployeesPage;

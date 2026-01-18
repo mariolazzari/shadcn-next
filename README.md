@@ -535,6 +535,8 @@ pnpm dlx shadcn@latest add drawer
 
 ### Loading skeleton
 
+[Skeleton](https://ui.shadcn.com/docs/components/skeleton)
+
 ```sh
 pnpm dlx shadcn@latest add skeleton
 ```
@@ -566,4 +568,169 @@ function Loading() {
 }
 
 export default Loading;
+```
+
+### Data table
+
+[Data table](https://ui.shadcn.com/docs/components/data-table)
+
+```sh
+pnpm dlx shadcn@latest add table
+pnpm add @tanstack/react-table
+```
+
+```tsx
+"use client";
+
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+}
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  return (
+    <div className="overflow-hidden rounded-md border">
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map(headerGroup => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map(row => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map(cell => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  );
+}
+```
+
+### Data table pagination
+
+[Pagnation](https://ui.shadcn.com/docs/components/data-table#pagination)
+
+### Custom cell render
+
+```tsx
+"use client";
+
+import { Badge } from "@/components/ui/badge";
+import { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
+
+export type Employee = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  teamName: string;
+  isTeamLeader: boolean;
+  avatar?: string;
+};
+
+export const columns: ColumnDef<Employee>[] = [
+  {
+    accessorKey: "avatar",
+    header: "",
+    cell: ({ row }) => {
+      const { avatar, firstName, lastName } = row.original;
+      const fullName = `${firstName} ${lastName}`;
+      const initials = `${firstName[0]} ${lastName[0]}`;
+
+      if (avatar) {
+        return (
+          <Image
+            className="rounded-full"
+            src={avatar}
+            alt={fullName}
+            width={32}
+            height={32}
+          />
+        );
+      }
+
+      return (
+        <span className="uppercase bg-muted p-2 rounded-full">{initials}</span>
+      );
+    },
+  },
+  {
+    accessorKey: "firstName",
+    header: "First Name",
+  },
+  {
+    accessorKey: "lastName",
+    header: "Last Name",
+  },
+  {
+    accessorKey: "teamName",
+    header: "Team",
+  },
+  {
+    accessorKey: "isTeamLeader",
+    header: "",
+    cell: ({ row }) => {
+      return row.original.isTeamLeader ? (
+        <Badge variant="success">Leader</Badge>
+      ) : null;
+    },
+  },
+];
 ```
